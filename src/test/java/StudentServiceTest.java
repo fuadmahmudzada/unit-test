@@ -138,10 +138,30 @@ class StudentServiceTest {
         studentService.addStudent(student2);
         studentService.addStudent(student3);
 
-
+        //Test olunan expected type in sub classini da throw ede biler.
+        //Yeni ozu ve super type lari exception
+        //kimi goturule biler.
         assertThrows(RuntimeException.class, ()->{
             studentService.getStudentByName("name1");
         }, "this should throw an exception of studentnotfound or its super type");
     }
 
+    @Test
+    public void getStudentByNameUsingAssertThrowExactly(){
+        StudentService studentService = new StudentService();
+        Student student = new Student(1L, "name1", "A");
+        Student student1 = new Student(2L, "name2", "A");
+        Student student2 = new Student(3L, "name3", "B");
+        Student student3 = new Student(4L, "name4", "B");
+        studentService.addStudent(student);
+        studentService.addStudent(student1);
+        studentService.addStudent(student2);
+        studentService.addStudent(student3);
+
+        StudentNotFoundException studentNotFoundException = assertThrowsExactly(StudentNotFoundException.class, ()->{
+            studentService.getStudentByName("name");
+        }, ()->"This meant to throw exactly StudentNotFoundException");
+
+        assertEquals("couldn't found name", studentNotFoundException.getMessage());
+    }
 }

@@ -87,7 +87,7 @@ public class StudentService {
 
     public Student getStudentByName(String name){
         return studentList.stream().filter(student -> student.getName().equals(name))
-                .findFirst().orElseThrow(()->new StudentNotFoundException("couldn't found"));
+                .findFirst().orElseThrow(()->new StudentNotFoundException("couldn't found " + name));
     }
 
 
